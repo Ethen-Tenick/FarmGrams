@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8'>
+		<meta name='viewport'
+			  content='width=device-width,initial-scale=1.0'>
+		<meta http-equiv='X-UA-Compatible'
+			  content='ie=edge'>
+		<title>LogIn</title>
+		<link rel='stylesheet' href='./index.css'>
+		<script src=''></script>
+	</head>
+	<body>
+		<div class='main_div'>
+			<div class='title'>
+				Welcome To LogIn	
+			</div>
+			<form method='POST' action='/login'>
+				<div class='input_div'>
+					<label>Username</label>
+					<input name='user' type='text' required  id='username'/>
+					<p class='verified' id='namevalid' ></p>
+				</div>
+				<div class='input_div'>
+					<label>Password</label>
+					<input name='passcode' type='password' required id='passcode'/>
+					<p class='verified' id='passwordvalid'></p>
+				</div>
+				<div class='button_div'>
+					<a href='/register' class='register'>SignUp</a>
+					<button type='submit' class='log'>LogIn</button>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

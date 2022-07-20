@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8'>
+		<meta name='viewport'
+			  content='width=device-width,initial-scale=1.0'>
+		<meta http-equiv='X-UA-Compatible'
+			  content='ie=edge'>
+		<title>SignUp</title>
+		<link rel='stylesheet' href='./index.css'>
+		<script src='./index.js'></script>
+	</head>
+	<body>
+		<div class='main_div'>
+			<div id='title'>
+				Welcome To SignUp 
+			</div>
+			<form method='POST' action='/register'>
+				<div class='input_div'>
+					<label>Username</label>
+					<input onkeypress='checkname()' name='username' required  type='text' id='username'/>
+					<p class='verified' id='namevalid' >check availability of username is available</p>
+				</div>
+				<div class='input_div'>
+					<label>Password</label>
+					<input onkeypress='checkpasscode()' name='passcode' required  type='password' id='passcode'/>
+					<p class='verified' id='passcodevalid'>Passcode should be 4 characters or above</p>
+				</div>
+				<div class='button_div'>
+					<a href='/login' class='logIn'>LogIn</a>
+					<button type='submit' class='signUp'>SignUp</button>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,27 @@
+////////// FUNCTIONS AROUND THE APP //////////////
+
+validate user signIn
+search database - user,category,anything 
+change settings -- last feature
+register new users and check availability of the username
+delete user account 
+send dms to a person or group
+recieve dms from the sender or group
+create friends/followers
+ability to follow other people 
+follow other users and like,share ,comment 
+unfollow,delete post.
+bring news about farming community from external api
+have huge built in groups for different parts of farming  and the impovements that can help the farming community
+users can subscriber to specific news or services that are organisations to get news and updates when any changes  a are made
+users can see a page full of many blogSites and their headline that consern mainly farmers and they can get  the    info while still in my site --l'll give credit to the authors and the Blog with a link
+
+
+/////////////////////////////////////////////////////////
+
+
+
+
+
+
+

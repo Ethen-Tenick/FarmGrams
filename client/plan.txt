@@ -1,0 +1,24 @@
+//////////////// THE PAGES ////////////////
+
+sitepage
+loginPage
+Homepage
+search page
+Feedpage
+top-20
+userProfilepage
+otherProfilepage (subscribe , follow ,nosettings, remove admin previlages);
+Dms page
+dm each message
+explore page
+subscribers
+followers
+following
+settings
+
+
+
+
+
+
+

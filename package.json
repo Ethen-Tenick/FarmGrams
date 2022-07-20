@@ -1,0 +1,11 @@
+{
+  "name": "farmgram",
+  "version": "1.0.0",
+  "description": "A platform for farmer to hang around as a community and focus on what they love the most",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "author": "Ethen Okeo",
+  "license": "ISC"
+}
