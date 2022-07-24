@@ -9,3 +9,8 @@ Change the imports routes as for my system was different e.g:
 			--whether your file system addresses files in the same 
 			directory with './index.css' or '/index.css'
 			
+	
+All the assets like images have not been pushed:
+	-check in each page which files are required and replace with 
+	your own from you file system or an image link.
+	-if the above is done the site will be as required
