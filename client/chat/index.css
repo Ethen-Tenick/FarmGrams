@@ -1,0 +1,313 @@
+:root{
+	--chat-header-bg:black;
+	--mainbgd:#f5f5f5;
+	--nav-bg-color:black;
+	--nav-font-size:12px;
+	--sender-font-size:15px;
+	--sender-font-weight:800;
+	--sender-text-size:12px;
+	--sender-text-weight:400;
+}
+*{
+	box-sizing:border-box;
+	margin:0px;
+	padding:0px;
+}
+body{
+	width:100%;
+	height:100%;
+	font-family:sans-serif,Monaco;
+	background-color:var(--mainbgd);
+}
+.main-chat-container{
+	width:100%;
+	height:100%;
+}
+
+/*This is the navbar container*/
+
+.nav-container{
+	width:100%;
+	height:50px;
+	position:sticky;
+	top:0px;
+	z-index:100;
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	background-color:var(--nav-bg-color);
+}
+.nav-container a{
+	margin-right:10px;	
+	margin-left:10px;	
+	text-decoration:none;
+	color:#ffff;
+	font-size:var(--nav-font-size);
+	padding:10px 12px;
+	border:2px solid black;
+	border-radius:5px;
+	transition:border 100ms;
+}
+.nav-container a:hover{
+	border:2px solid lightblue;
+}
+.nav-container button{
+	background-color:transparent;
+	border-radius:5px;
+	font-size:var(--nav-font-size);
+	color:#ffff;
+	border:2px solid black;
+	padding:10px 12px;
+	cursor:pointer;
+}
+.nav-container button:hover{
+	border:2px solid lightblue;
+}
+
+/* The nav bar has ended */
+
+.chat-room-div{
+	display:flex;
+}
+.chat-room-div-left{
+	flex:0.2;
+	position:relative;
+}
+.chat-room-div-right{
+	flex:0.8;
+	position:relative;
+	margin-left:20px;
+	margin-right:10px;
+}
+.chat-room-div-left h3{
+	margin:20px;
+}
+
+
+/* The invisible nav bar*/
+
+.invisible-nav-bar{
+	position:absolute;
+	visibility:hidden;
+	top:2px;
+	z-index:50;
+	background-color:black;
+	height:fit-content;
+	padding:10px;
+	display:flex;
+	width:300px;
+	flex-direction:column;
+	align-items:center;
+	justify-content:center;
+}
+.invisible-nav-bar a{
+	text-decoration:none;
+	color:#ffff;
+	font-size:16px;
+	width:100%;
+	height:40px;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	padding:10px;
+	background-color:transparent;
+}
+.invisible-nav-bar a:hover{
+	background-color:darkgrey;
+	color:black;
+}
+
+
+/* The chat room div */
+
+/* The left side of the chat area*/
+
+.recent-chat-left{
+	background-color:transparent;
+	height:600px;
+	overflow-y:scroll;
+}
+.each-recent-chat-left{
+	display:flex;
+	align-items:center;
+	height:100px;
+	background-color:transparent;
+	width:100%;
+	padding:20px;
+	border:none;
+	cursor:pointer;
+	border-top:1px solid grey;
+	margin-left:10px;
+	margin-right:10px;
+}
+.each-recent-chat-left:hover{
+	background-color:#ffff;
+}
+.each-contain-img{
+	flex:0.2;
+}
+.each-contain-img img{
+	height:3rem;
+	width:3rem;
+	border-radius:50%;
+	object-fit:cover;
+}
+.each-contain-text{
+	flex:0.8;
+	text-align:start;
+	margin-left:5px;
+}
+.sender-name{
+	font-size:var(--sender-font-size);
+	font-weight:var(--sender-font-weight);
+}
+.last-message{
+	font-size:var(--sender-text-size);
+	font-weight:var(--sender-text-weight);
+}
+
+/* The right side of the chat area*/
+
+.header-nav{
+	display:flex;
+	align-items:center;
+	margin-top:5px;
+	height:90px;
+	width:100%;
+	background-color:var(--chat-header-bg);
+}
+.header-nav-position{
+	display:flex;
+	align-items:center;
+	margin-left:50px;
+}
+.header-nav-right-img img{
+	height:4rem;
+	width:4rem;
+	border-radius:50%;
+	object-fit:cover;
+}
+.header-nav-right-text{
+	padding:5px;
+	margin-left:20px;
+}
+.current-chat-user{
+	font-size:16px;
+	font-weight:900;
+	color:#ffff;
+}
+.current-chat-lastseen{
+	font-size:12px;
+	font-weight:500;
+	color:#ffff;
+}
+
+
+/*The start of the chat area*/
+
+.chat-area-display{
+	background-image:url('./assets/nature3.jpg');
+	position:relative;
+	width:100%;
+	height:600px;
+	overflow-y:scroll;
+	object-fit:cover;
+}
+.reply-area{
+	position:sticky;
+	bottom:10px;
+	margin-left:32%;
+	width:400px;
+	height:110px;
+	border-radius:2rem;
+	padding:10px 12px;
+	background-color:#f5f5f5;
+}
+.reply-area-flex{
+	background-color:#ffff;
+	height:fit-content;
+	display:flex;
+	align-items:center;
+}
+.reply-area-flex button{
+	background-color:transparent;
+	border:none;
+}
+.reply-area-flex img{
+	transform:rotate(180deg);
+	height:2rem;
+	width:2rem;
+	padding:2px;
+}
+.enter-textarea{
+	min-height:15px;
+	max-height:100px;
+	overflow-y:scroll;
+	width:300px;
+	background-color:transparent;
+	font-size:12px;
+	color:black;
+	outline:none;
+	border:none;
+}
+
+/*Below is the sender and receiver bubble text*/
+
+/*The user messages*/
+
+.sender-message{
+	display:absolute;
+	margin-left:10px;
+	margin-top:10px;
+	margin-bottom:10px;
+	display:flex;
+	align-items:center;
+}
+.sender-message img{
+	height:2rem;
+	width:2rem;
+	object-fit:cover;
+	border-radius:50%;
+	margin-right:10px;
+}
+.sender-text{
+	height:fit-content;
+	border-radius:2rem;
+	width:300px;
+	padding:20px;
+	background-color:grey;
+	font-size:15px;
+	color:black;
+}
+
+/*The user messages*/
+
+.user-message{
+	display:absolute;
+	margin-left:70%;
+	margin-right:10px;
+	margin-top:10px;
+	margin-bottom:10px;
+	display:flex;
+	align-items:center;
+}
+.user-message img{
+	margin-right:10px;
+	height:2rem;
+	width:2rem;
+	object-fit:cover;
+	border-radius:50%;
+}
+.user-text{
+	height:fit-content;
+	border-radius:2rem;
+	width:300px;
+	padding:20px;
+	background-color:grey;
+	font-size:15px;
+	color:black;
+}
+
+
+
+

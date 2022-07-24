@@ -22,6 +22,7 @@ router.route('/').
 
 router.use('/login', login);
 
+
 router.use('/register', register);
 
 //the logic to see if the name is in the database should be done here
