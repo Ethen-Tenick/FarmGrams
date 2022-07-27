@@ -2,7 +2,7 @@
 let see = false;
 
 showMenu = () => {
-	show = document.querySelector('.invisible-nav-bar');
+	const show = document.querySelector('.invisible-nav-bar');
 
 	see = !see;
 
@@ -15,19 +15,20 @@ showMenu = () => {
 }
 
 sendMessage = () => {
-	message = document.querySelector('.enter-textarea').value;
-	random = document.querySeloctor('.user-text');
-	random.innerHTML = message;
+	var message = document.querySelector('.enter-textarea').value;
+	var newdiv = document.createElement('div');	
+	var newp = document.createElement('p');	
+	var newimg = document.createElement('img');	
 
-	newdiv = document.createElement('div');	
-	newp = document.createElement('p');	
-	newimg = document.createElement('img');	
+	var textnode = document.createTextNode(message);
 
-	newimg.src='./assets/group.jpg'
 	newdiv.className='user-message';
 	newp.className='user-text';
 
-	newp.innerHTML = message;
+	newp.appendChild(textnode);
+	newdiv.appendChild(newp);
 
-	newdiv.appendChild(newimg,newp);
+	document.querySelector('.enter-textarea').value = '';
 }
+
+
