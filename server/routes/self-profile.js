@@ -1,6 +1,8 @@
 const express = require('/data/data/com.termux/files/usr/lib/node_modules/express');
 const router = express.Router();
 
+const page = '/data/data/com.termux/files/home/storage/dcim/Portfolio/farmGram/client/profile'
+
 // module imports required
 const explore = require('./explore.js');
 const news = require('./feed.js');
@@ -13,10 +15,11 @@ const dms = require('./dms.js');
 
 //end of module imports
 
-router.route('/')
-.get((req,res) => {
-	console.log(req.params);
-	res.status(200).send('this is the homepage of the profile name');
+router.use(express.static(page));
+
+router.route('/').
+	get((req,res) => {
+		res.status(200);
 });
 
 
