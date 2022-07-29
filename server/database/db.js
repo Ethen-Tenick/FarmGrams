@@ -2,8 +2,11 @@ const mongoose = require('/data/data/com.termux/files/usr/lib/node_modules/mongo
 const DB = require('./.env');
 const User = require('./user.js');
 
-
-/////////////THE DATABASE INITIALIZATION ///////////////
+let exist = false;
+let loged = false;
+let logpasscode = false;
+let availability = false;
+let userpresent = false;
 
 const start = async () => {
 	try{
@@ -15,43 +18,71 @@ const start = async () => {
 };	
 start();
 
-/////////////// END OF INITIALIZATION /////////////////
 
-//below is to create a new user and save to mongodb
 
-async function run() {
-
-	// const = await User.find({name : 'Mansoor'})
-	//
-	// above finds user with name of mansoor from db
-	
-	// const = await User.findById('34jkdfjkfsewi')
-	//
-	// it will bring user with that id 
-	//
-	// User.deleteOne({name : 'ethen'}) --will delete a user
-	
-
+async function logInUser(user,passcode) {
 	try{
-		const user = await User.create({
-			name : 'Ethen',
-			age : 20,
-			skill : 'basketball',
-			email : 'ETHEN@gmail.com',
-			hobbies : ['fishing', 'swimming', 'racing'],
-			address:{
-				street : 'Kalifornia',
-				city : 'Nairobi',
-				ip :'121.234.5454.23.2'
+		const file = await User.find({name : user});
+
+		if(file.length > 0){
+			exitst = true;
+			for(var i = 0;i < file.length; i++){	
+				let person = file[i];
+				console.log(person);
+				userpresent = true;
+
+				if(person.passcode == passcode){
+					loged = true;
+					logpasscode = true;
+					console.log(`Welcome back ${person.name}`);
+					break;
+				}else{
+					console.log(`wrong passcode for ${person.name}`);
+				};
 			}
-		});
+		}else{
+			console.log(`${user} not Found`);
+		}
 
-		//	user.name = 'Jack'; // to update the user name and remember to save
-
-		//	await user.save(); this is also anotherway
-		console.log(user);
 	}catch(e){
 		console.log(e.message);
-	};
+	}
+}
+
+
+async function makeUser(newuser,userpasscode) {
+	try{
+		const username = await User.find({name : newuser});
+
+		if(username.length > 0){
+			console.log('Name not Availabily');
+
+		}else{
+			availability = true;
+			const user = await User.create({
+				name : newuser,
+				passcode:userpasscode
+				});
+
+			console.log(user);
+			console.log('Success User Made');
+		}
+
+	}catch(e){
+
+		console.log(e.message);
+	}
+
 };
-run();
+
+
+module.exports = { 
+	makeUser,
+	logInUser,
+	logpasscode,
+	exist,
+	loged,
+	availability,
+	userpresent
+};
+
