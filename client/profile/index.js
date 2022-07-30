@@ -70,3 +70,9 @@ const showsaved = () => {
 
 }
 
+/// delete user from db ////
+
+const deletepost = () => {
+
+};
+

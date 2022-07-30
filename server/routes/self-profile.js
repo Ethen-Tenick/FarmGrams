@@ -40,5 +40,4 @@ router.use('/subscriber',subscriber);
 router.use('/dms',dms);
 
 
-
 module.exports = router;

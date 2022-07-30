@@ -10,8 +10,6 @@ const register = require('./register.js');
 const profile = require('./self-profile.js');
 
 
-
-
 router.use(express.static(page));
 
 router.route('/').
@@ -23,7 +21,6 @@ router.route('/').
 //and have passed in the name of the user in the url
 
 router.use('/login', login);
-
 
 router.use('/register', register);
 
