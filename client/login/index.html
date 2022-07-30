@@ -18,12 +18,12 @@
 			<form method='POST' action='/login'>
 				<div class='input_div'>
 					<label>Username</label>
-					<input name='user' type='text' required  id='username'/>
-					<p class='verified' id='namevalid' ></p>
+					<input name='user' type='text' required  id='username' onkeypress='checkuser()' />
+					<p class='verified' id='namevalid'></p>
 				</div>
 				<div class='input_div'>
 					<label>Password</label>
-					<input name='passcode' type='password' required id='passcode'/>
+					<input name='passcode' onkeypress='checkpasscode()' type='password' required id='passcode'/>
 					<p class='verified' id='passwordvalid'></p>
 				</div>
 				<div class='button_div'>

@@ -1,9 +1,6 @@
 const mongoose = require('/data/data/com.termux/files/usr/lib/node_modules/mongoose');
 const DB = require('./.env');
-const User = require('./user.js');
-
-
-/////////////THE DATABASE INITIALIZATION ///////////////
+const { User, Post, Other } = require('./user.js');
 
 const start = async () => {
 	try{
@@ -15,43 +12,18 @@ const start = async () => {
 };	
 start();
 
-/////////////// END OF INITIALIZATION /////////////////
+const deletePost = async (user,item) => {
+	const userProfile = User.find({name:user});
+	const userPosts = userProfile.posts;
 
-//below is to create a new user and save to mongodb
+}
+const alldocs = async () => {
+	// await User.deleteMany();
+	const alldocs = await User.find({});
+	for(let person of alldocs){
+		//console.log(person);
+	}
+}
+alldocs();
 
-async function run() {
 
-	// const = await User.find({name : 'Mansoor'})
-	//
-	// above finds user with name of mansoor from db
-	
-	// const = await User.findById('34jkdfjkfsewi')
-	//
-	// it will bring user with that id 
-	//
-	// User.deleteOne({name : 'ethen'}) --will delete a user
-	
-
-	try{
-		const user = await User.create({
-			name : 'Ethen',
-			age : 20,
-			skill : 'basketball',
-			email : 'ETHEN@gmail.com',
-			hobbies : ['fishing', 'swimming', 'racing'],
-			address:{
-				street : 'Kalifornia',
-				city : 'Nairobi',
-				ip :'121.234.5454.23.2'
-			}
-		});
-
-		//	user.name = 'Jack'; // to update the user name and remember to save
-
-		//	await user.save(); this is also anotherway
-		console.log(user);
-	}catch(e){
-		console.log(e.message);
-	};
-};
-run();

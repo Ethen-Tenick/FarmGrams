@@ -1,14 +1,14 @@
 const express = require('/data/data/com.termux/files/usr/lib/node_modules/express');
+
 const router = express.Router();
+
 const page = '/data/data/com.termux/files/home/storage/dcim/Portfolio/farmGram/client/sitepage'
 
-// the direction of the routes
-
 const login = require('./login.js');
+
 const register = require('./register.js');
 const profile = require('./self-profile.js');
 
-//end of the direction to the routes
 
 router.use(express.static(page));
 
@@ -21,7 +21,6 @@ router.route('/').
 //and have passed in the name of the user in the url
 
 router.use('/login', login);
-
 
 router.use('/register', register);
 
