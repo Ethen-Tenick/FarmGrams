@@ -1,4 +1,4 @@
-const { User, Post, Other } = require('/data/data/com.termux/files/home/storage/dcim/Portfolio/farmGram/server/database/user.js');
+const { User, Post, OtherUser } = require('/data/data/com.termux/files/home/storage/dcim/Portfolio/farmGram/server/database/user.js');
 
 
 const createUser = async (req,res) => {
@@ -14,7 +14,44 @@ const createUser = async (req,res) => {
 		}else{
 			const user = await User.create({
 				name : newuser,
-				passcode:userpasscode
+				passcode:newpasscode,
+				updatedAt:new Date(),
+				createdAt:new Date(),
+				followers:{
+					name:'',
+					followers:0,
+					following:0,
+					subscribers:0,
+					subscribing:0,
+				},
+				following:{
+					name:'',
+					followers:0,
+					following:0,
+					subscribers:0,
+					subscribing:0,
+				},
+				subscribers:{
+					name:'',
+					followers:0,
+					following:0,
+					subscribers:0,
+					subscribing:0,
+				},
+				subscribing:{
+					name:'',
+					followers:0,
+					following:0,
+					subscribers:0,
+					subscribing:0,
+				},
+				settings:'',
+				posts:{
+					caption:'nothing at all',
+					updatedAt:new Date(),
+					createdAt:new Date(),
+				}
+				
 				});
 
 			console.log(user);
@@ -24,11 +61,8 @@ const createUser = async (req,res) => {
 
 	}catch(e){
 		console.log(e);
-		next();
 	}
 }
-
-
 const logUser = async (req,res) => {
 	try{
 		const user = req.body.user;
@@ -59,5 +93,18 @@ const logUser = async (req,res) => {
 		next();
 	}
 }
+
+
+const follow = async (username,accountname) => {
+	//await User.deleteMany();
+	const me = await User.find({name:username}).select('followers');
+	console.log(me);
+}
+follow('Ethen','Tenick');
+
+
+
+
+
 
 module.exports = {createUser,logUser};
