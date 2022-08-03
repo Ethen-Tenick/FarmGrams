@@ -1,11 +1,13 @@
 const mongoose = require('/data/data/com.termux/files/usr/lib/node_modules/mongoose');
 
-const { schema } = mongoose; 
+const { Schema } = mongoose; 
 
 //the parameters that can be passed to the specified collection
 
 
-const postInfoSchema = new mongoose.Schema({
+const postSchema = new Schema({
+	_id: Schema.Types.ObjectId,
+	name : String,
 	caption : String,
 	updatedAt : Date,
 	createdAt :{
@@ -15,11 +17,8 @@ const postInfoSchema = new mongoose.Schema({
 	content : String
 });
 
-const postSchema = new mongoose.Schema({
-	name : String,
-	info:[{ type:Schema.Types.ObjectId, ref:'PostInfo'}]
-});
-const otherUserSchema = new mongoose.Schema({
+const otherUserSchema = new Schema({
+	_id: Schema.Types.ObjectId,
 	name : String,
 	createdAt :{
 		type:Date,
@@ -31,7 +30,9 @@ const otherUserSchema = new mongoose.Schema({
 	subscribing:[{type:Schema.Types.ObjectId, ref:'User'}],
 	posts:[{type:Schema.Types.ObjectId, ref:'Post'}],
 });
-const userSchema = new mongoose.Schema({
+
+
+const userSchema = Schema({
 	_id: Schema.Types.ObjectId,
 	name : String,
 	passcode : String,
@@ -44,7 +45,7 @@ const userSchema = new mongoose.Schema({
 	following:[{type:Schema.Types.ObjectId, ref:'OtherUser'}],
 	subscribers:[{type:Schema.Types.ObjectId, ref:'OtherUser'}],
 	subscribing:[{type:Schema.Types.ObjectId, ref:'OtherUser'}],
-	settings:String,
+	settings:[String],
 	posts:[{type:Schema.Types.ObjectId, ref:'Post'}],
 });
 
@@ -55,7 +56,6 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User',userSchema);
 const Post = mongoose.model('Post',postSchema);
 const OtherUser = mongoose.model('OtherUser',otherUserSchema);
-const PostInfo = mongoose.model('PostInfo',postInfoSchema);
 
-module.exports = { User, Post, OtherUser, PostInfo }; 
+module.exports = { User, Post, OtherUser }; 
 

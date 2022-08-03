@@ -1,3 +1,4 @@
+const mongoose = require('/data/data/com.termux/files/usr/lib/node_modules/mongoose');
 const { User, Post, OtherUser } = require('/data/data/com.termux/files/home/storage/dcim/Portfolio/farmGram/server/database/user.js');
 
 
@@ -17,43 +18,14 @@ const createUser = async (req,res) => {
 				passcode:newpasscode,
 				updatedAt:new Date(),
 				createdAt:new Date(),
-				followers:{
-					name:'',
-					followers:0,
-					following:0,
-					subscribers:0,
-					subscribing:0,
-				},
-				following:{
-					name:'',
-					followers:0,
-					following:0,
-					subscribers:0,
-					subscribing:0,
-				},
-				subscribers:{
-					name:'',
-					followers:0,
-					following:0,
-					subscribers:0,
-					subscribing:0,
-				},
-				subscribing:{
-					name:'',
-					followers:0,
-					following:0,
-					subscribers:0,
-					subscribing:0,
-				},
-				settings:'',
-				posts:{
-					caption:'nothing at all',
-					updatedAt:new Date(),
-					createdAt:new Date(),
-				}
-				
-				});
+				followers:[],
+				following:[],
+				subscribers:[],
+				subscribing:[],
+				settings:[],
+				posts:[],
 
+				});
 			console.log(user);
 			console.log('Success User Made');
 			res.redirect('/login')
@@ -95,14 +67,84 @@ const logUser = async (req,res) => {
 }
 
 
-const follow = async (username,accountname) => {
+const PersonDetails = async (username,accountname) => {
 	//await User.deleteMany();
-	const me = await User.find({name:username}).select('followers');
-	console.log(me);
+	
+	if((username.length > 2) && (accountname.length > 2)){
+		const post = await Post.create({
+			_id : new mongoose.Types.ObjectId(),
+			name : 'PAPA',
+			caption : 'this the first db',
+			updatedAt :new Date(),
+			createAt : new Date(),
+			content : 'This is the main content'
+		});
+		const uncle = await OtherUser.create({
+			_id : new mongoose.Types.ObjectId(),
+			name:'Lebron',
+			createdAt:new Date(),
+			updated:new Date(),
+			followers:[],
+			following:[],
+			subscribers:[],
+			subscribing:[],
+			posts:[post._id],
+		});
+		const friend = await OtherUser.create({
+			_id : new mongoose.Types.ObjectId(),
+			name:'Richie',
+			createdAt:new Date(),
+			updated:new Date(),
+			followers:[],
+			following:[],
+			subscribers:[],
+			subscribing:[],
+			posts:[post._id],
+		});
+		const person = await User.create({
+			_id : new mongoose.Types.ObjectId(),
+			name:'Tenick',
+			passcode:'34343123',
+			createdAt:new Date(),
+			updatedAt:new Date(),
+			followers:[friend._id,friend._id],
+			following:[friend._id],
+			subscribers:[friend._id],
+			subscribing:[friend._id],
+			posts:[post._id],
+		});
+
+
+	}else{
+		console.log('The username input is too short');
+		console.log('The accountname input is too short');
+	}	
+
 }
-follow('Ethen','Tenick');
+
+const populateAll = async (property,identifier) => {
+
+	await User.find({property:identifier}).populate('followers');
+	await User.find({property:identifier}).populate('following');
+	await User.find({property:identifier}).populate('subscribers');
+	await User.find({property:identifier}).populate('subscribing');
+	await User.find({property:identifier}).populate('posts');
+
+}
 
 
+const getUsers = async () => {
+	populateAll('name','Tenick');
+	const data = await User.find({name : 'Tenick'});
+	console.log(data);
+
+	const getPost = async (data) => {
+		await data.map(post => {
+		});
+	}
+}
+
+getUsers();
 
 
 

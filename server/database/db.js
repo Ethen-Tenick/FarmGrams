@@ -1,7 +1,6 @@
 const mongoose = require('/data/data/com.termux/files/usr/lib/node_modules/mongoose');
 const DB = require('./.env');
-const { User, Post, Other } = require('./user.js');
-
+const { User, Post, OtherUser} = require('./user.js');
 const start = async () => {
 	try{
 	await mongoose.connect(DB);
