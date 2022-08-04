@@ -67,10 +67,12 @@ const logUser = async (req,res) => {
 }
 
 
-const PersonDetails = async (username,accountname) => {
+const PersonDetails = async (username) => {
+
 	//await User.deleteMany();
 	
-	if((username.length > 2) && (accountname.length > 2)){
+	if(username.length > 2){
+
 		const post = await Post.create({
 			_id : new mongoose.Types.ObjectId(),
 			name : 'PAPA',
@@ -103,7 +105,7 @@ const PersonDetails = async (username,accountname) => {
 		});
 		const person = await User.create({
 			_id : new mongoose.Types.ObjectId(),
-			name:'Tenick',
+			name:username,
 			passcode:'34343123',
 			createdAt:new Date(),
 			updatedAt:new Date(),
@@ -117,7 +119,6 @@ const PersonDetails = async (username,accountname) => {
 
 	}else{
 		console.log('The username input is too short');
-		console.log('The accountname input is too short');
 	}	
 
 }
@@ -133,20 +134,106 @@ const populateAll = async (property,identifier) => {
 }
 
 
-const getUsers = async () => {
-	populateAll('name','Tenick');
-	const data = await User.find({name : 'Tenick'});
-	console.log(data);
+const getUsers = async (username) => {
 
-	const getPost = async (data) => {
-		await data.map(post => {
-		});
+	populateAll('name',"'Tenick'");
+	const followingObject = await User.find({name : username}).select('following');
+	const followersObject = await User.find({name : username}).select('followers');
+	const subscribingObject = await User.find({name : username}).select('subscribing');
+	const subscribersObject = await User.find({name : username}).select('subscribers');
+	const postsObject = await User.find({name : username}).select('posts');
+
+
+/// To get the User Id and Chosen Category of User ///
+	
+	var { _id, following } = followingObject[0];
+	var { _id, followers } = followersObject[0];
+	var { _id, subscribers } = subscribersObject[0];
+	var { _id, subscribing } = subscribingObject[0];
+	var { _id, posts} = postsObject[0];
+
+
+//////  Get the Ids of the items in Category  ///////
+	
+	const listCount = async (category) => {
+		if(category.length < 1){
+			console.log(`Chosen  Category is Empty`);
+		}
+		for(var i = 0;i < category.length; i++){
+			console.log(category[i]);
+		}
+	};
+
+	///////////////////////////////////////
+	const searchId = async (category,model) => {
+		let number = 0;
+
+		for(var i = 0;i < category.length; i++){
+			number += 1;
+			var item = await model.find({ _id : category[i]});
+
+//// get specific fields of the specified object ////
+			
+			for(var i = 0;i < item.length;i++){
+				item.map(one => {
+					console.log(one.caption);
+				});
+			}
+
+		}
+		console.log(`${username} has ${number} items in this category`);
+
 	}
+	//listCount(posts); // category
+	//searchId(posts, Post);  //model group
+
 }
+getUsers('Tenick');
 
-getUsers();
+
+//// remove yourself as sub from others account /////
 
 
+const unsubscribe = async (theiraccount,myname) => {
+
+	const followingObject = await User.find({name : theiraccount}).select('following');
+	const followersObject = await User.find({name : theiraccount}).select('followers');
+	const subscribingObject = await User.find({name : theiraccount}).select('subscribing');
+	const subscribersObject = await User.find({name : theiraccount}).select('subscribers');
+	const postsObject = await User.find({name : theiraccount}).select('posts');
+
+	var { _id, following } = followingObject[0];
+	var { _id, followers } = followersObject[0];
+	var { _id, subscribers } = subscribersObject[0];
+	var { _id, subscribing } = subscribingObject[0];
+	var { _id, posts} = postsObject[0];
+
+	const lookAccount = await OtherUser.find({name : myname});
+	const personLooked = lookAccount[0];
+
+	const checkProbability = async (category) => {
+		if(category.length < 1){
+			console.log(`${theiraccount} has no sub `);
+		}
+		for(var i = 0;i < category.length; i++){
+
+			let foundAccount = await OtherUser.find({ _id : category[i] });
+			let personFound = foundAccount[0];
+
+			if(personFound !== undefined){ 
+
+				if (personFound.name == personLooked.name){
+				console.log(personLooked);
+				await OtherUser.deleteOne({ name : personFound.name });
+				console.log(`${myname} removed from ${theiraccount}'s sub`);
+			}else{
+				console.log(`${myname} is not a sub or is not Found `);
+			}}
+		}
+	}
+	checkProbability(subscribers);
+}
+unsubscribe('Ethen','Richie');
 
 
 module.exports = {createUser,logUser};
