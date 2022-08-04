@@ -226,12 +226,15 @@ const unsubscribe = async (theiraccount,myname) => {
 				console.log(personLooked);
 				await OtherUser.deleteOne({ name : personFound.name });
 				console.log(`${myname} removed from ${theiraccount}'s sub`);
+				}else{
+					console.log(`${myname} is not a sub`);
+				}	
 			}else{
-				console.log(`${myname} is not a sub or is not Found `);
-			}}
+				console.log(`${myname} is not Found`);
+			}
 		}
 	}
-	checkProbability(subscribers);
+	checkProbability(followers);
 }
 unsubscribe('Ethen','Richie');
 
