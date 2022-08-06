@@ -7,10 +7,9 @@ const page = '/data/data/com.termux/files/home/storage/dcim/Portfolio/farmGram/c
 const explore = require('./explore.js');
 const news = require('./feed.js');
 const search = require('./search.js');
-const followers = require('./followers.js');
-const following = require('./following.js');
+const follow = require('./follow.js');
 const settings = require('./settings.js');
-const subscriber = require('./subscriber.js');
+const subscribe = require('./subscribe.js');
 const dms = require('./dms.js');
 
 //end of module imports
@@ -29,13 +28,11 @@ router.use('/news',news);
 
 router.use('/search',search);
 
-router.use('/followers',followers);
-
-router.use('/following',following);
+router.use('/follow',follow);
 
 router.use('/settings',settings);
 
-router.use('/subscriber',subscriber);
+router.use('/subscribe',subscribe);
 
 router.use('/dms',dms);
 
