@@ -116,27 +116,20 @@ const PersonDetails = async (username) => {
 			posts:[post._id],
 		});
 
+		const newMember = await User.find({name:username});
+		console.log(newMember);
 
 	}else{
 		console.log('The username input is too short');
 	}	
 
 }
+//PersonDetails('Ethen');
 
-const populateAll = async (property,identifier) => {
+////// Global access objects and categories ////////
 
-	await User.find({property:identifier}).populate('followers');
-	await User.find({property:identifier}).populate('following');
-	await User.find({property:identifier}).populate('subscribers');
-	await User.find({property:identifier}).populate('subscribing');
-	await User.find({property:identifier}).populate('posts');
+const mainFunctionContainer = async (username) => {
 
-}
-
-
-const getUsers = async (username) => {
-
-	populateAll('name',"'Tenick'");
 	const followingObject = await User.find({name : username}).select('following');
 	const followersObject = await User.find({name : username}).select('followers');
 	const subscribingObject = await User.find({name : username}).select('subscribing');
@@ -144,99 +137,103 @@ const getUsers = async (username) => {
 	const postsObject = await User.find({name : username}).select('posts');
 
 
-/// To get the User Id and Chosen Category of User ///
-	
 	var { _id, following } = followingObject[0];
 	var { _id, followers } = followersObject[0];
 	var { _id, subscribers } = subscribersObject[0];
 	var { _id, subscribing } = subscribingObject[0];
 	var { _id, posts} = postsObject[0];
 
+	console.log(following);
+	console.log(followers);
+	console.log(subscribers);
+	console.log(subscribing);
+	console.log(posts);
 
-//////  Get the Ids of the items in Category  ///////
-	
-	const listCount = async (category) => {
+	/// To get the User Id and Chosen Category of User ///
+
+
+	////// End of the global constants //////////
+
+
+	const populateCategory = async (property,identifier,category) => {
+		await User.find({property:identifier}).populate(category);
+	}
+	populateCategory('name','Ethen','following');
+
+
+	const listAllid = async (category) => {
 		if(category.length < 1){
 			console.log(`Chosen  Category is Empty`);
-		}
-		for(var i = 0;i < category.length; i++){
-			console.log(category[i]);
+		}else{
+			for(let person of category){
+				console.log(person);
+			}
 		}
 	};
+	listAllid(followers);
 
-	///////////////////////////////////////
-	const searchId = async (category,model) => {
+	const searchId = async (username,model,category) => {
+		//username is used for the console part only;
 		let number = 0;
 
-		for(var i = 0;i < category.length; i++){
+		for(var i = 0;i < category.length ; i++){
 			number += 1;
-			var item = await model.find({ _id : category[i]});
+			const item = await model.find({ _id : category[i]});
 
-//// get specific fields of the specified object ////
+			console.log('Below is the searchId result');
+			console.log(item);
+
+			//get specific fields of the specified object 
 			
-			for(var i = 0;i < item.length;i++){
+			for(var j = 0;j < item.length;j++){
 				item.map(one => {
-					console.log(one.caption);
+					console.log(one);
 				});
 			}
-
 		}
-		console.log(`${username} has ${number} items in this category`);
-
+		console.log(`${username} has ${number} items in ${category}`);
 	}
-	//listCount(posts); // category
-	//searchId(posts, Post);  //model group
+	console.log('This is the signal');
+	searchId('Ethen',OtherUser, followers);  //model group
 
-}
-getUsers('Tenick');
+	//remove yourself as sub from others account
+	const unsubscribe = async (account,undoAccount,categoryParameter) => {
 
+		const searchAccountObject = await User.find({name : account}).select(categoryParameter);
+		const AccountObject = searchAccountObject[0];
+		const  AccountId = AccountObject._id;
+		const AccountCategory = AccountObject.categoryParameter;
+		const searchUndoObject = await OtherUser.find({ name  : undoAccount });
+		const UndoObject = searchUndoObject[0];
+		const UndoId = Undo0bject._id;
 
-//// remove yourself as sub from others account /////
-
-
-const unsubscribe = async (theiraccount,myname) => {
-
-	const followingObject = await User.find({name : theiraccount}).select('following');
-	const followersObject = await User.find({name : theiraccount}).select('followers');
-	const subscribingObject = await User.find({name : theiraccount}).select('subscribing');
-	const subscribersObject = await User.find({name : theiraccount}).select('subscribers');
-	const postsObject = await User.find({name : theiraccount}).select('posts');
-
-	var { _id, following } = followingObject[0];
-	var { _id, followers } = followersObject[0];
-	var { _id, subscribers } = subscribersObject[0];
-	var { _id, subscribing } = subscribingObject[0];
-	var { _id, posts} = postsObject[0];
-
-	const lookAccount = await OtherUser.find({name : myname});
-	const personLooked = lookAccount[0];
-
-	const checkProbability = async (category) => {
-		if(category.length < 1){
-			console.log(`${theiraccount} has no sub `);
-		}
-		for(var i = 0;i < category.length; i++){
-
-			let foundAccount = await OtherUser.find({ _id : category[i] });
-			let personFound = foundAccount[0];
-
-			if(personFound !== undefined){ 
-
-				if (personFound.name == personLooked.name){
-				console.log(personLooked);
-				await OtherUser.deleteOne({ name : personFound.name });
-				console.log(`${myname} removed from ${theiraccount}'s sub`);
-				}else{
-					console.log(`${myname} is not a sub`);
-				}	
-			}else{
-				console.log(`${myname} is not Found`);
-			}
-		}
-	}
-	checkProbability(followers);
-}
-unsubscribe('Ethen','Richie');
+		console.log(`This is account for ${AccountCategory}`);
 
 
-module.exports = {createUser,logUser};
+		if(AccountCategory < 1){
+			console.log(`${account} is null`)
+		}else{
+			console.log(`${account} has subs`);
+
+			for(let eachSubObject of AccountCategory){
+				console.log(`This is the eachSubObject ${eachSubObject}`)
+
+					if(eachSubObject._id == UndoId){
+						console.log(eachSubObject);
+						//await OtherUser.deleteOne({ name : personFound.name });
+						console.log(`${undoAccount} removed from ${account}'s sub`);
+						break;
+					}
+					console.log(`${undoAccount} is not a sub`);
+					
+				}
+		}}
+		unsubscribe('Ethen','Richie',followers);
+};
+mainFunctionContainer('Ethen');
+
+
+module.exports = {
+	createUser,
+	logUser
+};
