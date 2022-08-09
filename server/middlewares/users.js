@@ -136,6 +136,7 @@ const mainFunctionContainer = async (username) => {
 	const subscribersObject = await User.find({name : username}).select('subscribers');
 	const postsObject = await User.find({name : username}).select('posts');
 
+	/// To get the User Id and Chosen Category of User //
 
 	var { _id, following } = followingObject[0];
 	var { _id, followers } = followersObject[0];
@@ -143,72 +144,48 @@ const mainFunctionContainer = async (username) => {
 	var { _id, subscribing } = subscribingObject[0];
 	var { _id, posts} = postsObject[0];
 
-	console.log(following);
-	console.log(followers);
-	console.log(subscribers);
-	console.log(subscribing);
-	console.log(posts);
-
-	/// To get the User Id and Chosen Category of User ///
-
-
 	////// End of the global constants //////////
 
 
 	const populateCategory = async (property,identifier,category) => {
 		await User.find({property:identifier}).populate(category);
-	}
+	};
 	populateCategory('name','Ethen','following');
+	populateCategory('name','Ethen','followers');
 
 
-	const listAllid = async (category) => {
+	// get the maincontainer user information //
+	
+	const listCategoryId = async (category) => {
 		if(category.length < 1){
 			console.log(`Chosen  Category is Empty`);
 		}else{
 			for(let person of category){
+				// find id of those in  selected field //
+				// below find user in specific model doesn't work
+				const userFound = await OtherUser.find({ _id : person});
 				console.log(person);
 			}
 		}
 	};
-	listAllid(followers);
+	//listCategoryId(followers);
 
-	const searchId = async (username,model,category) => {
-		//username is used for the console part only;
-		let number = 0;
-
-		for(var i = 0;i < category.length ; i++){
-			number += 1;
-			const item = await model.find({ _id : category[i]});
-
-			console.log('Below is the searchId result');
-			console.log(item);
-
-			//get specific fields of the specified object 
-			
-			for(var j = 0;j < item.length;j++){
-				item.map(one => {
-					console.log(one);
-				});
-			}
-		}
-		console.log(`${username} has ${number} items in ${category}`);
-	}
-	console.log('This is the signal');
-	searchId('Ethen',OtherUser, followers);  //model group
 
 	//remove yourself as sub from others account
 	const unsubscribe = async (account,undoAccount,categoryParameter) => {
 
+		// the categoryParameter does not work //
+
 		const searchAccountObject = await User.find({name : account}).select(categoryParameter);
 		const AccountObject = searchAccountObject[0];
-		const  AccountId = AccountObject._id;
-		const AccountCategory = AccountObject.categoryParameter;
+		const AccountId = AccountObject._id;
+		const AccountCategory = AccountObject.followers;
+		console.log(`This is the AccountCategory ${AccountCategory[0]}`);
 		const searchUndoObject = await OtherUser.find({ name  : undoAccount });
-		const UndoObject = searchUndoObject[0];
-		const UndoId = Undo0bject._id;
+		const UndoObjectId = searchUndoObject[0]._id;
+		console.log(`This is the UndoObjectId ${UndoObjectId}`);
 
 		console.log(`This is account for ${AccountCategory}`);
-
 
 		if(AccountCategory < 1){
 			console.log(`${account} is null`)
@@ -218,17 +195,17 @@ const mainFunctionContainer = async (username) => {
 			for(let eachSubObject of AccountCategory){
 				console.log(`This is the eachSubObject ${eachSubObject}`)
 
-					if(eachSubObject._id == UndoId){
+					if(eachSubObject._id == UndoObjectId){
+						console.log('found the match');
 						console.log(eachSubObject);
 						//await OtherUser.deleteOne({ name : personFound.name });
 						console.log(`${undoAccount} removed from ${account}'s sub`);
 						break;
 					}
 					console.log(`${undoAccount} is not a sub`);
-					
 				}
 		}}
-		unsubscribe('Ethen','Richie',followers);
+		unsubscribe('Ethen','Richie','followers');
 };
 mainFunctionContainer('Ethen');
 
