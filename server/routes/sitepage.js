@@ -8,6 +8,10 @@ const login = require('./login.js');
 
 const register = require('./register.js');
 const profile = require('./self-profile.js');
+const news = require('./news.js');
+const explore = require('./explore.js');
+const top20 = require('./top-20.js');
+const search = require('./search.js');
 
 
 router.use(express.static(page));
@@ -21,8 +25,11 @@ router.route('/').
 //and have passed in the name of the user in the url
 
 router.use('/login', login);
-
 router.use('/register', register);
+router.use('/news',news);
+router.use('/search',search);
+router.use('/explore',explore);
+router.use('/top20',top20);
 
 //the logic to see if the name is in the database should be done here
 

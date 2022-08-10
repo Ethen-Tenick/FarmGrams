@@ -193,22 +193,19 @@ const mainFunctionContainer = async (username) => {
 			console.log(`${account} has subs`);
 
 			for(let eachSubObject of AccountCategory){
-				console.log(`This is the eachSubObject ${eachSubObject}`)
-
-					if(eachSubObject._id == UndoObjectId){
+					if(eachSubObject == UndoObjectId){
 						console.log('found the match');
 						console.log(eachSubObject);
-						//await OtherUser.deleteOne({ name : personFound.name });
+						await OtherUser.deleteOne({ name : personFound.name });
 						console.log(`${undoAccount} removed from ${account}'s sub`);
 						break;
 					}
 					console.log(`${undoAccount} is not a sub`);
 				}
 		}}
-		unsubscribe('Ethen','Richie','followers');
+		//unsubscribe('Ethen','Richie','followers');
 };
 mainFunctionContainer('Ethen');
-
 
 module.exports = {
 	createUser,
